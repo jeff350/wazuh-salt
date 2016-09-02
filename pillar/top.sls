@@ -1,5 +1,6 @@
 base:
   'manager1*':
-    - develop
+    - manager-dev
+    - service-openssl
   'manager2*':
-    - develop
+    - agent-dev

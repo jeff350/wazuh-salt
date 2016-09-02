@@ -1,3 +1,5 @@
+{% set hostname=grains['id'] %}
+
 wazuh_repo:
   pkgrepo.managed:
     - humanname: CentOS-$releasever - Wazuh
@@ -28,3 +30,30 @@ wazuh-manager:
     - group: root
     - template: jinja
     - mode: 644
+
+rules-config:
+  file.managed:
+    - name: /var/ossec/rules/local_rules.xml
+    - user: root
+    - group: ossec
+    - mode: 550
+    - source: salt://wazuh-manager/files/local_rules.xml
+
+ssl-key:
+  cmd.run:
+    - name: openssl genrsa -out /var/ossec/etc/sslmanager.key 2048
+    - unless: stat /var/ossec/etc/sslmanager.key
+
+ssl-cert:
+  cmd.run:
+    - name: openssl req -subj
+            '/CN={{ hostname }}
+            /C={{ pillar['service-openssl']['countrynamedefault'] -}}
+            /ST={{ pillar['service-openssl']['stateorprovincenamedefault'] -}}
+            /O={{ pillar['service-openssl']['orgnamedefault'] }}'
+            -new -x509 -key /var/ossec/etc/sslmanager.key
+            -out /var/ossec/etc/sslmanager.cert
+            -days 730
+    - unless: stat /var/ossec/etc/sslmanager.cert
+    - onlyif: stat /var/ossec/etc/sslmanager.key
+
