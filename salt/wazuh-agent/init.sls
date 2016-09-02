@@ -39,5 +39,7 @@ ossec-service:
   service.running:
     - enable: True
     - name: wazuh-agent
+    - watch:
+      - file: /var/ossec/etc/ossec.conf
     - require:
       - cmd: server-auth-shutdown

@@ -12,6 +12,7 @@ wazuh-manager:
   service.running:
     - watch:
       - file: /var/ossec/etc/ossec.conf
+      - file: /var/ossec/rules/local_rules.xml
     - require:
       - pkg: wazuh-manager
 
