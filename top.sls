@@ -1,4 +1,3 @@
 base:
   '*':
     - requirements
-    - wazuh-manager
