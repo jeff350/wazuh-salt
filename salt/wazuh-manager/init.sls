@@ -17,6 +17,14 @@ wazuh-manager:
   file.managed:
     - source: salt://wazuh-manager/files/ossec.conf
     - user: root
+    - template: jinja
     - group: ossec
     - mode: 640
 
+/var/ossec/etc/shared/agent.conf:
+  file.managed:
+    - source: salt://wazuh-manager/files/agent.conf
+    - user: root
+    - group: root
+    - template: jinja
+    - mode: 644
