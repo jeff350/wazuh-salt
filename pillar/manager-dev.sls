@@ -40,7 +40,6 @@ ossec_server_config:
     - format: 'syslog'
       location: '/var/log/secure'
 
-
 shared_agents:
   - type: os
     type_value: linux

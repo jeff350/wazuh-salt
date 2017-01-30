@@ -12,7 +12,7 @@ wazuh-manager:
   service.running:
     - watch:
       - file: /var/ossec/etc/ossec.conf
-      - file: /var/ossec/ruleset/rules/local_rules.xml
+      - file: /var/ossec/etc/rules/local_rules.xml
     - require:
       - pkg: wazuh-manager
 
@@ -34,7 +34,7 @@ wazuh-manager:
 
 rules-config:
   file.managed:
-    - name: /var/ossec/ruleset/rules/local_rules.xml
+    - name: /var/ossec/etc/rules/local_rules.xml
     - user: root
     - group: ossec
     - mode: 550
