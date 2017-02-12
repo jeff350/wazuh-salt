@@ -14,6 +14,14 @@ wazuh_repo_xenial:
     - dist: xenial
     - gpgcheck: 1
     - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+{% elif grains['os'] == 'Ubuntu'  and grains['oscodename'] == 'trusty' %}
+wazuh_repo_xenial:
+  pkgrepo.managed:
+    - humanname: Wazuh_Repo
+    - name: deb http://packages.wazuh.com.s3-website-us-west-1.amazonaws.com/apt trusty main
+    - dist: xenial
+    - gpgcheck: 1
+    - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
 {% endif %}
 
 wazuh-agent:

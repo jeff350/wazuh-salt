@@ -1,11 +1,31 @@
 {% set hostname=grains['id'] %}
 
-wazuh_repo:
+
+{% if grains['os'] == 'CentOS' and grains['osrelease_info'][0] == 7 %}
+wazuh_repo_Centos_7:
   pkgrepo.managed:
     - humanname: CentOS-$releasever - Wazuh
     - baseurl: https://packages.wazuh.com/yum/el/$releasever/$basearch
     - gpgcheck: 1
     - gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+{% elif grains['os'] == 'Ubuntu'  and grains['oscodename'] == 'xenial' %}
+wazuh_repo_xenial:
+  pkgrepo.managed:
+    - humanname: Wazuh_Repo
+    - name: deb http://packages.wazuh.com.s3-website-us-west-1.amazonaws.com/apt xenial main
+    - dist: xenial
+    - gpgcheck: 1
+    - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+{% elif grains['os'] == 'Ubuntu'  and grains['oscodename'] == 'trusty' %}
+wazuh_repo_xenial:
+  pkgrepo.managed:
+    - humanname: Wazuh_Repo
+    - name: deb http://packages.wazuh.com.s3-website-us-west-1.amazonaws.com/apt trusty main
+    - dist: xenial
+    - gpgcheck: 1
+    - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+{% endif %}
 
 wazuh-manager:
   pkg.installed: []
