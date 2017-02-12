@@ -1,4 +1,4 @@
-Install Wazuh-manager and Wazuh-agent with SaltSlack
+Install Wazuh-manager and Wazuh-agent and filebeat with SaltSlack
 
 Salt Master configuration example:
 
