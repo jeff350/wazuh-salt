@@ -15,7 +15,6 @@ ossec_conf_agent:
     syscheck_frequency_check: 72000
     ignore_files:
       - /etc/mnttab
-
     directories:
       - check_all: 'yes'
         dirs: /etc,/usr/bin,/usr/sbin
