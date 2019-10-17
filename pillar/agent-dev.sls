@@ -26,11 +26,6 @@ ossec_conf_agent:
         whodata: 'yes'
         realtime: 'no'
 
-  localfiles:
-    - format: 'syslog'
-      location: '/var/log/messages'
-    - format: 'syslog'
-      location: '/var/log/secure'
   commands:
     - name: 'host-deny'
       executable: 'host-deny.sh'
