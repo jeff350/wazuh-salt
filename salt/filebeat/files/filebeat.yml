@@ -9,8 +9,8 @@ filebeat:
     json.overwrite_keys: true
 
 output:
- logstash:
+ elasticsearch:
    # The Logstash hosts
-   hosts: ["logstash:5000"]
+   hosts: ["elasticsearch:5000"]
 #  ssl:
 #    certificate_authorities: ["/etc/filebeat/logstash.crt"]

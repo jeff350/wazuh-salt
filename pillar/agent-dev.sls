@@ -1,15 +1,32 @@
 ossec_conf_agent:
-  manager_ip: 192.168.212.136
-  frequency_check: 72000
-  ignore_files:
-    - /etc/mtab
-    - /etc/mnttab
-    - /etc/hosts.deny
-  directories:
-    - check_all: 'yes'
-      dirs: /etc,/usr/bin,/usr/sbin
-    - check_all: 'yes'
-      dirs: /bin,/sbin
+  manager_ip: 172.16.0.15
+  manager_port: 1514
+  manager_protocol: udp
+
+
+  osquery:
+    - disabled: 'yes'
+    - run_daemon: 'yes'
+    - log_path: '/var/log/osquery/osqueryd.results.log'
+    - config_path: '/etc/osquery/osquery.conf'
+    - add_labels: 'yes'
+
+  syscheck:
+    syscheck_frequency_check: 72000
+    ignore_files:
+      - /etc/mnttab
+
+    directories:
+      - check_all: 'yes'
+        dirs: /etc,/usr/bin,/usr/sbin
+      - check_all: 'yes'
+        dirs: /bin,/sbin
+      - check_all: 'yes'
+        dirs: '/home'
+        recursion_level: 2
+        whodata: 'yes'
+        realtime: 'no'
+
   localfiles:
     - format: 'syslog'
       location: '/var/log/messages'
