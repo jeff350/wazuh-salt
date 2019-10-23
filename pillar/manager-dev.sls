@@ -1,8 +1,8 @@
 ossec_server_config:
   mail_to:
-    - jose@wazuh.com
+    - test@wazuh.test.com
   mail_smtp_server: localhost
-  mail_from: ossec@wazuh.com
+  mail_from: test-from@wazuh.test.com
   frequency_check: 72000
   ignore_files:
     - /etc/mtab

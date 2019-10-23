@@ -1,16 +1,15 @@
-filebeat:
- prospectors:
-  - input_type: log
-    paths:
-     - "/var/ossec/data/logs/alerts/alerts.json"
-    document_type: wazuh-alerts
-    json.message_key: log
-    json.keys_under_root: true
-    json.overwrite_keys: true
+# Wazuh - Filebeat configuration file
+filebeat.modules:
+  - module: wazuh
+    alerts:
+      enabled: true
+    archives:
+      enabled: false
 
-output:
- logstash:
-   # The Logstash hosts
-   hosts: ["logstash:5000"]
-#  ssl:
-#    certificate_authorities: ["/etc/filebeat/logstash.crt"]
+setup.template.json.enabled: true
+setup.template.json.path: '/etc/filebeat/wazuh-template.json'
+setup.template.json.name: 'wazuh'
+setup.template.overwrite: true
+setup.ilm.enabled: false
+
+output.elasticsearch.hosts: ['elasticsearch:9200']
