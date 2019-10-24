@@ -1,4 +1,5 @@
 ossec_conf_agent:
+  register_agent: yes
   manager_ip: 172.16.0.15
   manager_port: 1514
   protocol: tcp

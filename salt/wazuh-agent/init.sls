@@ -49,12 +49,7 @@ wazuh-agent:
     - require:
       - pkg: wazuh-agent
 
-{# Use events/reactor system to start up the ossec-authd process on the OSSEC master #}
-server-auth:
-  cmd.run:
-    - name: salt-call event.fire_master 'ossec-auth-start' 'ossec'
-    - onlyif: file -s /var/ossec/etc/client.keys|grep empty || test ! -f /var/ossec/etc/client.keys 
-
+{% if {{ pillar['ossec_conf_agent']['register_agent'] }} == 'yes'  %}
 {# OSSEC authd agent connects to master and registers its key #}
 agent-auth:
   cmd.wait:
@@ -62,13 +57,7 @@ agent-auth:
     - onlyif: file -s /var/ossec/etc/client.keys|grep empty
     - watch:
       - cmd: server-auth
-
-{# We are done creating our key so lets shut down the ossec-auth process on the master using reactor #}
-server-auth-shutdown:
-  cmd.wait:
-    - name: salt-call event.fire_master 'ossec-auth-stop' 'ossec'
-    - watch:
-      - cmd: agent-auth
+{% endif %}
 
 /var/ossec/etc/ossec.conf:
   file.managed:
