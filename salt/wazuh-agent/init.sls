@@ -49,14 +49,12 @@ wazuh-agent:
     - require:
       - pkg: wazuh-agent
 
-{% if pillar['ossec_conf_agent']['register_agent'] == 'yes'  %}
 {# OSSEC authd agent connects to master and registers its key #}
 agent-auth:
   cmd.wait:
     - name: sleep 10 && /var/ossec/bin/agent-auth -m {{ pillar['ossec_conf_agent']['manager_ip'] }} -p 1515
     - onlyif: file -s /var/ossec/etc/client.keys|grep empty
-    - watch:
-      - cmd: server-auth
+
 {% endif %}
 
 /var/ossec/etc/ossec.conf:
@@ -75,5 +73,3 @@ wazuh-service:
     - watch:
       - file: /var/ossec/etc/ossec.conf
       - cmd: agent-auth
-    - require:
-      - cmd: server-auth-shutdown

@@ -4,7 +4,6 @@ ossec_conf_agent:
   manager_port: 1514
   protocol: tcp
 
-
   osquery:
     - disabled: 'yes'
     - run_daemon: 'yes'
