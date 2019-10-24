@@ -49,7 +49,7 @@ wazuh-agent:
     - require:
       - pkg: wazuh-agent
 
-{% if {{ pillar['ossec_conf_agent']['register_agent'] }} == 'yes'  %}
+{% if pillar['ossec_conf_agent']['register_agent'] == 'yes'  %}
 {# OSSEC authd agent connects to master and registers its key #}
 agent-auth:
   cmd.wait:
