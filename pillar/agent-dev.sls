@@ -1,7 +1,7 @@
 ossec_conf_agent:
   manager_ip: 172.16.0.15
   manager_port: 1514
-  manager_protocol: udp
+  protocol: tcp
 
 
   osquery:
