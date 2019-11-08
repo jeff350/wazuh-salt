@@ -4,25 +4,41 @@
 {% if grains['os'] == 'CentOS' and grains['osrelease_info'][0] == 7 %}
 wazuh_repo_Centos_7:
   pkgrepo.managed:
-    - humanname: CentOS-$releasever - Wazuh
-    - baseurl: https://packages.wazuh.com/yum/el/$releasever/$basearch
+    - humanname: Wazuh repository
+    - baseurl: https://packages.wazuh.com/3.x/yum/
     - gpgcheck: 1
     - gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
 
-{% elif grains['os'] == 'Ubuntu'  and grains['oscodename'] == 'xenial' %}
+{% elif grains['os'] == 'Ubuntu' and grains['oscodename'] == 'xenial' %}
 wazuh_repo_xenial:
   pkgrepo.managed:
-    - humanname: Wazuh_Repo
-    - name: deb http://packages.wazuh.com.s3-website-us-west-1.amazonaws.com/apt xenial main
+    - humanname: Wazuh repository
+    - name: deb https://packages.wazuh.com/3.x/apt/ xenial main
     - dist: xenial
     - gpgcheck: 1
     - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
-{% elif grains['os'] == 'Ubuntu'  and grains['oscodename'] == 'trusty' %}
-wazuh_repo_xenial:
+{% elif grains['os'] == 'Ubuntu' and grains['oscodename'] == 'trusty' %}
+wazuh_repo_trusty:
   pkgrepo.managed:
-    - humanname: Wazuh_Repo
-    - name: deb http://packages.wazuh.com.s3-website-us-west-1.amazonaws.com/apt trusty main
-    - dist: xenial
+    - humanname: Wazuh repository
+    - name: deb https://packages.wazuh.com/3.x/apt/ trusty main
+    - dist: trusty
+    - gpgcheck: 1
+    - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+{% elif grains['os'] == 'Ubuntu' and grains['oscodename'] == 'bionic' %}
+wazuh_repo_bionic:
+  pkgrepo.managed:
+    - humanname: Wazuh repository
+    - name: deb https://packages.wazuh.com/3.x/apt/ bionic main
+    - dist: bionic
+    - gpgcheck: 1
+    - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+{% elif grains['os'] == 'Ubuntu' and grains['oscodename'] == 'stretch' %}
+wazuh_repo_stretch:
+  pkgrepo.managed:
+    - humanname: Wazuh repository
+    - name: deb https://packages.wazuh.com/3.x/apt/ stretch main
+    - dist: stretch
     - gpgcheck: 1
     - key_url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
 {% endif %}
@@ -43,14 +59,6 @@ wazuh-manager:
     - template: jinja
     - group: ossec
     - mode: 640
-
-/var/ossec/etc/shared/agent.conf:
-  file.managed:
-    - source: salt://wazuh-manager/files/agent.conf
-    - user: root
-    - group: root
-    - template: jinja
-    - mode: 644
 
 rules-config:
   file.managed:

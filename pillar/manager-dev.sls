@@ -1,4 +1,5 @@
 ossec_server_config:
+  protocol: tcp
   mail_to:
     - test@wazuh.test.com
   mail_smtp_server: localhost
