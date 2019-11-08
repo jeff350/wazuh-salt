@@ -6,14 +6,14 @@ Salt Master configuration example:
 # Example:
 file_roots:
   base:
-    - /srv/salt
-    - /srv/formulas
+    - /home/vagrant/wazuh-salt/salt
+    - /home/vagrant/wazuh-salt/formulas
 
 pillar_roots:
   base:
-    - /srv/pillar
+    - /home/vagrant/wazuh-salt/pillar
 
 reactor:
   - 'ossec':
-    - /srv/reactor/ossec.sls
+    - /home/vagrant/wazuh-salt/reactor/ossec.sls
 ```
