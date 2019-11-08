@@ -43,19 +43,14 @@ wazuh_repo_stretch:
 
 wazuh-agent:
   pkg.installed: []
-  service.running:
-    - watch:
-      - file: /var/ossec/etc/ossec.conf
-    - require:
-      - pkg: wazuh-agent
+
 
 {# OSSEC authd agent connects to master and registers its key #}
 agent-auth:
-  cmd.wait:
-    - name: sleep 10 && /var/ossec/bin/agent-auth -m {{ pillar['ossec_conf_agent']['manager_ip'] }} -p 1515
+  cmd.run:
+    - name: /var/ossec/bin/agent-auth -m {{ pillar['ossec_conf_agent']['manager_ip'] }} -p 1515
     - onlyif: file -s /var/ossec/etc/client.keys|grep empty
 
-{% endif %}
 
 /var/ossec/etc/ossec.conf:
   file.managed:
